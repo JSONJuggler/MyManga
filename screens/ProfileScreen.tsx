@@ -1,17 +1,18 @@
 import React from "react";
-import { StyleSheet, ScrollView, SafeAreaView, Text } from "react-native";
+import { SafeAreaView, StyleSheet, Text, ScrollView } from "react-native";
 import globalStyles, { COLORS } from "../styles/styles"
+import { ProfileScreenProps } from "../app";
 
-const SettingsScreen = () => {
+const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
   return (
     <SafeAreaView style={[globalStyles.safeArea, styles.safeArea]}>
       <ScrollView style={styles.container}>
         <Text style={styles.text}>
-          This is the Settings Screen
-          </Text>
+          This is the Profile Screen
+        </Text>
       </ScrollView>
     </SafeAreaView>
-  )
+  );
 };
 
 const styles = StyleSheet.create({
@@ -22,8 +23,8 @@ const styles = StyleSheet.create({
     color: COLORS.black
   },
   safeArea: {
-    backgroundColor: COLORS.settingsBar
+    backgroundColor: COLORS.profileBackground
   }
-});
+})
 
-export default SettingsScreen;
+export default ProfileScreen
