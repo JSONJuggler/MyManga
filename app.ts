@@ -60,8 +60,3 @@ export type ProfileScreenProps = {
   route: ProfileScreenRouteProp;
   navigation: ProfileScreenNavigationProp;
 };
-
-export type State = {
-  readonly pages: any
-  readonly api: ApisauceInstance
-};
