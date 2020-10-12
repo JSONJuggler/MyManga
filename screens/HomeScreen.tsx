@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, SafeAreaView, StyleSheet, TouchableOpacity, TextInput, FlatList, View } from "react-native";
+import { Image, Text, SafeAreaView, StyleSheet, TouchableOpacity, TextInput, FlatList, View } from "react-native";
 import { connect } from "react-redux";
 import { RootState } from "../src/reducers";
 import globalStyles, { COLORS } from "../styles/styles"
@@ -15,14 +15,33 @@ type props = {
 type itemProps = {
   title: string
   artist: string
+  img: string | undefined
 }
 
-const Item = ({ title, artist }: itemProps) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{title}</Text>
-    <Text style={styles.title}>{artist}</Text>
-  </View>
-);
+const Item = ({ title, artist, img }: itemProps) => {
+  return <>
+    {img && (<View style={styles.item}>
+      <View style={styles.content}>
+        <Image style={styles.stretch} source={{ uri: img }} />
+        <View style={styles.textContent}>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.title}>{artist}</Text>
+        </View>
+      </View>
+    </View>
+    )}
+    {!img && (<View style={styles.item}>
+      <View style={styles.content}>
+        <View style={styles.textContent}>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.title}>{artist}</Text>
+        </View>
+      </View>
+    </View>
+    )}
+  </>
+
+};
 
 const HomeScreen = ({ searchManga, manga: { searchResult } }: props) => {
 
@@ -56,7 +75,7 @@ const HomeScreen = ({ searchManga, manga: { searchResult } }: props) => {
         </TouchableOpacity>
         <FlatList
           data={searchResult}
-          renderItem={({ item }) => (<Item title={item.titleString} artist={item.artistString} />)}
+          renderItem={({ item }) => (<Item title={item.titleString} artist={item.artistString} img={item.coverUrl} />)}
           keyExtractor={item => item.titleString}
         />
       </View>
@@ -91,8 +110,22 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     marginHorizontal: 16,
   },
+  content: {
+    flexDirection: "row"
+  },
+  textContent: {
+    alignSelf: "center",
+    paddingLeft: 10,
+    paddingRight: 10,
+    flexDirection: "column"
+  },
   title: {
     fontSize: 12,
+  },
+  stretch: {
+    width: 32,
+    height: 50,
+    resizeMode: 'stretch',
   },
 })
 
