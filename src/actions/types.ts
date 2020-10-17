@@ -1,10 +1,14 @@
-export const SEARCH_MANGA = "SEARCH_MANGA";
+export const SEARCH_MANGA_START = "SEARCH_MANG_START ";
+export const SEARCH_MANGA_FINISHED = "SEARCH_MANGA_FINISHED";
 export const SAVE_MANGA = "SAVE_MANGA";
 
 export type SearchResult = {
-  coverUrl?: string;
+  coverUrl: string;
   titleString: string;
-  artistString: string;
+  linkString: string;
+  chapterCountString: string;
+  mangaTypeString: string;
+  mangaGenreString: string;
 }
 
 export type Manga = {
@@ -12,8 +16,12 @@ export type Manga = {
   data: SearchResult
 }
 
-interface SearchMangaAction {
-  type: typeof SEARCH_MANGA
+interface SearchMangaStartAction {
+  type: typeof SEARCH_MANGA_START
+}
+
+interface SearchMangaFinishedAction {
+  type: typeof SEARCH_MANGA_FINISHED
   payload: Array<SearchResult>
 }
 
@@ -28,4 +36,4 @@ export type MangaState = {
   loading: boolean
 }
 
-export type MangaActionTypes = SearchMangaAction | SaveMangaAction
+export type MangaActionTypes = SearchMangaStartAction | SearchMangaFinishedAction | SaveMangaAction

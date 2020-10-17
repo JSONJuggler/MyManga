@@ -1,31 +1,6 @@
 import { RouteProp } from "@react-navigation/native";
-// import { StackNavigationProp } from "@react-navigation/stack";
 import { MaterialBottomTabNavigationProp } from "@react-navigation/material-bottom-tabs";
 import { ApisauceInstance } from "apisauce";
-
-// export type StackParamList = {
-//   Home: undefined;
-//   Login: undefined;
-//   Settings: undefined;
-// };
-
-// export type HomeScreenRouteProp = RouteProp<StackParamList, "Home">;
-
-// export type HomeScreenNavigationProp = StackNavigationProp<StackParamList, "Home">;
-
-// export type HomeScreenProps = {
-//   route: HomeScreenRouteProp;
-//   navigation: HomeScreenNavigationProp;
-// };
-
-// export type LoginScreenRouteProp = RouteProp<StackParamList, "Login">;
-
-// export type LoginScreenNavigationProp = StackNavigationProp<StackParamList, "Login">;
-
-// export type LoginScreenProps = {
-//   route: LoginScreenRouteProp;
-//   navigation: LoginScreenNavigationProp;
-// };
 
 export type TabParamList = {
   Home: undefined;
@@ -60,3 +35,7 @@ export type ProfileScreenProps = {
   route: ProfileScreenRouteProp;
   navigation: ProfileScreenNavigationProp;
 };
+
+export type MangaGenreState = {
+  [index: string]: { added: boolean, removed: boolean },
+}
