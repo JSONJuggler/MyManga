@@ -24,13 +24,14 @@ export const COLORS = {
   settingsBackground: COLOR_GRAY,
   black: COLOR_BLACK,
   white: COLOR_WHITE,
+  gray: COLOR_GRAY,
 };
 
 export default StyleSheet.create({
   button: {
     alignSelf: "center",
     alignItems: "center",
-    width: "60%",
+    // width: "60%",
     margin: 10,
     padding: 10,
     borderRadius: 15
