@@ -60,3 +60,4 @@ buck-out/
 *.swp
 *.swo
 *~
+.env
