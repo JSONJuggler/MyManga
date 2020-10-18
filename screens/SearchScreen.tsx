@@ -116,6 +116,7 @@ const SearchScreen = ({ searchManga, manga: { searchResult, loading } }: SearchS
         <FilterModal
           filterOpen={filterOpen}
           toggleFilter={toggleFilter}
+          resetFilter={resetFilter}
           genre={genre}
           type={type}
           status={status}

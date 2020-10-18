@@ -21,6 +21,7 @@ type FilterModalProps = {
   setStatus: (prev: any) => void
   setOrder: (prev: any) => void
   toggleFilter: () => void
+  resetFilter: () => void
 }
 
 const FilterModal = ({
@@ -33,7 +34,8 @@ const FilterModal = ({
   setType,
   setStatus,
   setOrder,
-  toggleFilter
+  toggleFilter,
+  resetFilter
 }: FilterModalProps) => {
 
   const mangaGenreOptions = Object.values(MangaGenre).map(genre => ({
@@ -71,6 +73,7 @@ const FilterModal = ({
             </Text>
             <RNPickerSelect
               style={pickerStyle}
+              key={type}
               onValueChange={(value) => setType((prev: any) => value)}
               value={type}
               items={mangaTypeOptions}>
@@ -83,6 +86,7 @@ const FilterModal = ({
             </Text>
             <RNPickerSelect
               style={pickerStyle}
+              key={status}
               onValueChange={(value) => setStatus((prev: any) => value)}
               value={status}
               items={mangaStatusOptions}>
@@ -95,6 +99,7 @@ const FilterModal = ({
             </Text>
             <RNPickerSelect
               style={pickerStyle}
+              key={order}
               onValueChange={(value) => setOrder((prev: any) => value)}
               value={order}
               items={mangaOrderOptions}>
@@ -145,14 +150,25 @@ const FilterModal = ({
           keyExtractor={item => item.label}
         />
 
-        <TouchableOpacity
-          onPress={toggleFilter}
-          style={[globalStyles.button, styles.button]}
-        >
-          <Text style={styles.text}>
-            Done
+        <View style={{ flexDirection: "row", justifyContent: "center" }}>
+          <TouchableOpacity
+            onPress={resetFilter}
+            style={[globalStyles.button, styles.button]}
+          >
+            <Text style={styles.text}>
+              Reset filters
           </Text>
-        </TouchableOpacity>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={toggleFilter}
+            style={[globalStyles.button, styles.button]}
+          >
+            <Text style={styles.text}>
+              Done
+          </Text>
+          </TouchableOpacity>
+        </View>
 
       </SafeAreaView>
     </Modal>
@@ -161,7 +177,7 @@ const FilterModal = ({
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: COLORS.searchBackground,
+    backgroundColor: COLORS.searchBar,
     flexDirection: "row"
   },
   checkBoxContainer: {
