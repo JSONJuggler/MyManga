@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   item: {
-    backgroundColor: COLORS.homeBar,
+    backgroundColor: COLORS.searchBar,
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
