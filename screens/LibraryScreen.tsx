@@ -1,9 +1,9 @@
 import React from "react";
 import { SafeAreaView, StyleSheet, Text, ScrollView } from "react-native";
 import globalStyles, { COLORS } from "../styles/styles"
-import { ProfileScreenProps } from "../app";
+import { LibraryScreenProps } from "../app";
 
-const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
+const LibraryScreen = ({ navigation }: LibraryScreenProps) => {
   return (
     <SafeAreaView style={[globalStyles.safeArea, styles.safeArea]}>
       <ScrollView style={styles.container}>
@@ -23,8 +23,8 @@ const styles = StyleSheet.create({
     color: COLORS.black
   },
   safeArea: {
-    backgroundColor: COLORS.profileBackground
+    backgroundColor: COLORS.libraryBackground
   }
 })
 
-export default ProfileScreen
+export default LibraryScreen

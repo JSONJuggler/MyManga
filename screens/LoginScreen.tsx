@@ -25,7 +25,7 @@ const LoginScreen = ({ login }: props) => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: COLORS.homeBar,
+    backgroundColor: COLORS.searchBackground,
   },
   container: {
     alignSelf: "center",
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     color: COLORS.black
   },
   safeArea: {
-    backgroundColor: COLORS.homeBackground
+    backgroundColor: COLORS.searchBackground
   }
 })
 

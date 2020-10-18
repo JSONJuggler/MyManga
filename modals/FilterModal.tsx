@@ -161,7 +161,7 @@ const FilterModal = ({
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: COLORS.homeBar,
+    backgroundColor: COLORS.searchBackground,
     flexDirection: "row"
   },
   checkBoxContainer: {
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   flatList: {
-    backgroundColor: COLORS.homeBackground,
+    backgroundColor: COLORS.searchBackground,
     padding: 20
   },
   pickerContainer: {
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     margin: 5
   },
   safeArea: {
-    backgroundColor: COLORS.homeBackground,
+    backgroundColor: COLORS.searchBackground,
     flex: 1
   },
   text: {

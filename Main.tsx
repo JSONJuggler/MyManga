@@ -6,8 +6,8 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { TabParamList } from "./app";
 import globalStyles, { COLORS } from "./styles/styles";
-import HomeScreen from "./screens/HomeScreen";
-import ProfileScreen from "./screens/ProfileScreen";
+import SearchScreen from "./screens/SearchScreen";
+import LibraryScreen from "./screens/LibraryScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 
 const Tab = createMaterialBottomTabNavigator<TabParamList>();
@@ -19,7 +19,7 @@ const Main = () => {
       <StatusBar barStyle="dark-content" />
       <NavigationContainer>
         <Tab.Navigator
-          initialRouteName="Home"
+          initialRouteName="Library"
           activeColor={COLORS.black}
           inactiveColor={COLORS.white}
           labeled={true}
@@ -28,25 +28,25 @@ const Main = () => {
         >
 
           <Tab.Screen
-            name="Home"
-            component={HomeScreen}
+            name="Search"
+            component={SearchScreen}
             options={{
-              tabBarLabel: "Home",
-              tabBarColor: COLORS.homeBar,
+              tabBarLabel: "Search",
+              tabBarColor: COLORS.searchBar,
               tabBarIcon: ({ color }) => (
-                <MaterialCommunityIcons name="home" color={color} size={26} />
+                <MaterialCommunityIcons name="magnify" color={color} size={26} />
               ),
             }}
           />
 
           <Tab.Screen
-            name="Profile"
-            component={ProfileScreen}
+            name="Library"
+            component={LibraryScreen}
             options={{
-              tabBarLabel: "My Jobs",
-              tabBarColor: COLORS.profileBar,
+              tabBarLabel: "Library",
+              tabBarColor: COLORS.libraryBar,
               tabBarIcon: ({ color }) => (
-                <MaterialCommunityIcons name="bell" color={color} size={26} />
+                <MaterialCommunityIcons name="book-open-page-variant" color={color} size={26} />
               ),
             }}
           />

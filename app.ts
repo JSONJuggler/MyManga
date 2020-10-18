@@ -4,9 +4,20 @@ import { ApisauceInstance } from "apisauce";
 
 export type TabParamList = {
   Home: undefined;
+  Library: undefined;
   Login: undefined;
   Profile: undefined;
   Settings: undefined;
+  Search: undefined;
+};
+
+export type SearchScreenRouteProp = RouteProp<TabParamList, "Search">;
+
+export type SearchScreenNavigationProp = MaterialBottomTabNavigationProp<TabParamList, "Search">;
+
+export type SearchScreenProps = {
+  route: SearchScreenRouteProp;
+  navigation: SearchScreenNavigationProp;
 };
 
 export type HomeScreenRouteProp = RouteProp<TabParamList, "Home">;
@@ -34,6 +45,15 @@ export type ProfileScreenNavigationProp = MaterialBottomTabNavigationProp<TabPar
 export type ProfileScreenProps = {
   route: ProfileScreenRouteProp;
   navigation: ProfileScreenNavigationProp;
+};
+
+export type LibraryScreenRouteProp = RouteProp<TabParamList, "Library">;
+
+export type LibraryScreenNavigationProp = MaterialBottomTabNavigationProp<TabParamList, "Library">;
+
+export type LibraryScreenProps = {
+  route: LibraryScreenRouteProp;
+  navigation: LibraryScreenNavigationProp;
 };
 
 export type MangaGenreState = {

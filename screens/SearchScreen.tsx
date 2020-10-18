@@ -16,7 +16,7 @@ import globalStyles, { COLORS } from "../styles/styles"
 import { searchManga } from "../src/actions/manga"
 import { MangaState } from "../src/actions/types";
 
-type HomeScreenProps = {
+type SearchScreenProps = {
   searchManga: (
     searchQuery: string,
     genre: MangaGenreState,
@@ -27,7 +27,7 @@ type HomeScreenProps = {
   manga: MangaState
 }
 
-const HomeScreen = ({ searchManga, manga: { searchResult, loading } }: HomeScreenProps) => {
+const SearchScreen = ({ searchManga, manga: { searchResult, loading } }: SearchScreenProps) => {
 
   const [searchQuery, setSearchQuery] = React.useState("");
   const [filterOpen, setFilterOpen] = React.useState(false);
@@ -161,7 +161,7 @@ const HomeScreen = ({ searchManga, manga: { searchResult, loading } }: HomeScree
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: COLORS.homeBar,
+    backgroundColor: COLORS.searchBar,
     flexDirection: "row"
   },
   buttonContainer: {
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   safeArea: {
-    backgroundColor: COLORS.homeBackground
+    backgroundColor: COLORS.searchBackground
   },
   text: {
     color: COLORS.black,
@@ -189,4 +189,4 @@ const mapStateToProps = (state: RootState) => ({
   manga: state.manga
 })
 
-export default connect(mapStateToProps, { searchManga })(HomeScreen);
+export default connect(mapStateToProps, { searchManga })(SearchScreen);
