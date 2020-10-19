@@ -2,6 +2,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { COLORS } from "../styles/styles"
 
+import { StackParamList } from "../app";
 import SearchScreen from "../screens/SearchScreen";
 import SearchDetailsScreen from "../screens/SearchDetailsScreen";
 

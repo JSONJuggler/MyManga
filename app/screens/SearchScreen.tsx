@@ -11,6 +11,7 @@ import { MangaGenre } from "../enums/mangaGenre";
 import { MangaType } from "../enums/mangaType";
 import { MangaStatus } from "../enums/mangaStatus";
 import { MangaOrder } from "../enums/mangaOrder";
+import { SearchScreenNavigationProp } from "../app"
 import globalStyles, { COLORS } from "../styles/styles"
 
 import { searchManga, selectFromSearch } from "../src/actions/manga"

@@ -12,7 +12,7 @@ import * as Progress from "react-native-progress";
 import ChapterListItem from "../components/ChapterListItem";
 import { connect } from "react-redux";
 import { RootState } from "../src/reducers";
-import { SearchDetailsScreenNavigationProp } from "../App"
+import { SearchDetailsScreenNavigationProp } from "../app"
 import globalStyles, { COLORS } from "../styles/styles"
 
 import { MangaState } from "../src/actions/types";
