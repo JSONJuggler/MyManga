@@ -72,6 +72,7 @@ const FilterModal = ({
               Type
             </Text>
             <RNPickerSelect
+              placeholder={{}}
               style={pickerStyle}
               key={type}
               onValueChange={(value) => setType((prev: any) => value)}
@@ -85,6 +86,7 @@ const FilterModal = ({
               Status
             </Text>
             <RNPickerSelect
+              placeholder={{}}
               style={pickerStyle}
               key={status}
               onValueChange={(value) => setStatus((prev: any) => value)}
@@ -98,6 +100,7 @@ const FilterModal = ({
               Order
             </Text>
             <RNPickerSelect
+              placeholder={{}}
               style={pickerStyle}
               key={order}
               onValueChange={(value) => setOrder((prev: any) => value)}

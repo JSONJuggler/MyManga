@@ -13,8 +13,8 @@ import { MangaStatus } from "../enums/mangaStatus";
 import { MangaOrder } from "../enums/mangaOrder";
 import globalStyles, { COLORS } from "../styles/styles"
 
-import { searchManga } from "../src/actions/manga"
-import { MangaState } from "../src/actions/types";
+import { searchManga, selectFromSearch } from "../src/actions/manga"
+import { MangaDetails, MangaState } from "../src/actions/types";
 
 type SearchScreenProps = {
   searchManga: (
@@ -24,55 +24,38 @@ type SearchScreenProps = {
     status: MangaStatus,
     order: MangaOrder
   ) => Promise<void>;
+  selectFromSearch: (
+    title: string,
+    link: string
+  ) => void
   manga: MangaState
+  navigation: SearchScreenNavigationProp
+  mangaDetails: MangaDetails
 }
 
-const SearchScreen = ({ searchManga, manga: { searchResult, loading } }: SearchScreenProps) => {
+const genreInit: MangaGenreState = {}
 
+Object.values(MangaGenre).map(key =>
+  genreInit[key] = { added: false, removed: false }
+)
+
+const SearchScreen = ({
+  searchManga,
+  selectFromSearch,
+  manga: {
+    searchResults,
+    mangaDetails,
+    searchEmpty,
+    loadingSearch
+  },
+  navigation,
+}: SearchScreenProps) => {
   const [searchQuery, setSearchQuery] = React.useState("");
   const [filterOpen, setFilterOpen] = React.useState(false);
   const [type, setType] = React.useState(MangaType.BOTH);
   const [status, setStatus] = React.useState(MangaStatus.BOTH);
   const [order, setOrder] = React.useState(MangaOrder.SIMILARITY);
-  const [genre, setGenre] = React.useState<MangaGenreState>({
-    [MangaGenre.ACTION]: { added: false, removed: false },
-    [MangaGenre.ADVENTURE]: { added: false, removed: false },
-    [MangaGenre.COMEDY]: { added: false, removed: false },
-    [MangaGenre.DEMONS]: { added: false, removed: false },
-    [MangaGenre.DRAMA]: { added: false, removed: false },
-    [MangaGenre.ECCHI]: { added: false, removed: false },
-    [MangaGenre.FANTASY]: { added: false, removed: false },
-    [MangaGenre.GENDER_BENDER]: { added: false, removed: false },
-    [MangaGenre.HAREM]: { added: false, removed: false },
-    [MangaGenre.HISTORICAL]: { added: false, removed: false },
-    [MangaGenre.HORROR]: { added: false, removed: false },
-    [MangaGenre.JOSEI]: { added: false, removed: false },
-    [MangaGenre.MAGIC]: { added: false, removed: false },
-    [MangaGenre.MARTIAL_ARTS]: { added: false, removed: false },
-    [MangaGenre.MATURE]: { added: false, removed: false },
-    [MangaGenre.MECHA]: { added: false, removed: false },
-    [MangaGenre.MILITARY]: { added: false, removed: false },
-    [MangaGenre.MYSTERY]: { added: false, removed: false },
-    [MangaGenre.ONE_SHOT]: { added: false, removed: false },
-    [MangaGenre.PSYCHOLOGICAL]: { added: false, removed: false },
-    [MangaGenre.ROMANCE]: { added: false, removed: false },
-    [MangaGenre.SCHOOL_LIFE]: { added: false, removed: false },
-    [MangaGenre.SCI_FI]: { added: false, removed: false },
-    [MangaGenre.SEINEN]: { added: false, removed: false },
-    [MangaGenre.SHOUJO]: { added: false, removed: false },
-    [MangaGenre.SHOUJOAI]: { added: false, removed: false },
-    [MangaGenre.SHOUNEN]: { added: false, removed: false },
-    [MangaGenre.SHOUNENAI]: { added: false, removed: false },
-    [MangaGenre.SLICE_OF_LIFE]: { added: false, removed: false },
-    [MangaGenre.SMUT]: { added: false, removed: false },
-    [MangaGenre.SPORTS]: { added: false, removed: false },
-    [MangaGenre.SUPER_POWER]: { added: false, removed: false },
-    [MangaGenre.SUPERNATURAL]: { added: false, removed: false },
-    [MangaGenre.TRAGEDY]: { added: false, removed: false },
-    [MangaGenre.VAMPIRE]: { added: false, removed: false },
-    [MangaGenre.YAOI]: { added: false, removed: false },
-    [MangaGenre.YURI]: { added: false, removed: false },
-  })
+  const [genre, setGenre] = React.useState<MangaGenreState>(genreInit)
 
   const handlePress = () => {
     searchManga(searchQuery, genre, type, status, order)
@@ -80,6 +63,25 @@ const SearchScreen = ({ searchManga, manga: { searchResult, loading } }: SearchS
 
   const toggleFilter = () => {
     setFilterOpen(() => !filterOpen)
+  }
+
+  const resetFilter = () => {
+    setType(() => MangaType.BOTH)
+    setStatus(() => MangaStatus.BOTH)
+    setOrder(() => MangaOrder.SIMILARITY)
+    setGenre(() => genreInit)
+  }
+
+  const handleNavigation = (title: string) => {
+    navigation.navigate("SearchDetails", { title })
+  }
+
+  const handleSelect = (title: string, link: string) => {
+    if (mangaDetails.requestUrl !== link) {
+      selectFromSearch(title, link)
+    }
+
+    handleNavigation(title)
   }
 
   return (
@@ -94,14 +96,25 @@ const SearchScreen = ({ searchManga, manga: { searchResult, loading } }: SearchS
           value={searchQuery}
         />
         <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            onPress={handlePress}
-            style={[globalStyles.button, styles.button]}
-          >
-            <Text style={styles.text}>
-              Search Manga
-          </Text>
-          </TouchableOpacity>
+          {!loadingSearch &&
+            <TouchableOpacity
+              onPress={handlePress}
+              style={[globalStyles.button, styles.button]}
+            >
+              <Text style={styles.text}>
+                Search Manga
+              </Text>
+            </TouchableOpacity>
+          }
+          {loadingSearch &&
+            <TouchableOpacity
+              style={[globalStyles.button, styles.button, { backgroundColor: COLORS.gray }]}
+            >
+              <Text style={styles.text}>
+                Searching...
+              </Text>
+            </TouchableOpacity>
+          }
           <TouchableOpacity
             onPress={toggleFilter}
             style={[globalStyles.button, styles.button]}
@@ -128,8 +141,8 @@ const SearchScreen = ({ searchManga, manga: { searchResult, loading } }: SearchS
         />
 
       </View>
-      {loading &&
-        <View style={{ justifyContent: "center", alignItems: "center" }}>
+      {loadingSearch &&
+        <View style={{ flex: .7, justifyContent: "center", alignItems: "center" }}>
           <Progress.CircleSnail
             color={COLORS.black}
             indeterminate={true}
@@ -141,9 +154,19 @@ const SearchScreen = ({ searchManga, manga: { searchResult, loading } }: SearchS
           </Text>
         </View>
       }
-      {!loading &&
+      {!loadingSearch && searchEmpty &&
+        <View style={{ flex: .7, justifyContent: "center", alignItems: "center" }}>
+          <Text style={styles.text}>
+            No manga found :,(
+          </Text>
+          <Text style={styles.text}>
+            Please try a new search.
+          </Text>
+        </View>
+      }
+      {!searchEmpty &&
         <FlatList
-          data={searchResult}
+          data={searchResults}
           renderItem={({ item }) => (
             <SearchListItem
               img={item.coverUrl}
@@ -152,6 +175,7 @@ const SearchScreen = ({ searchManga, manga: { searchResult, loading } }: SearchS
               chapterCount={item.chapterCountString}
               mangaType={item.mangaTypeString}
               mangaGenre={item.mangaGenreString}
+              handleSelect={handleSelect}
             />)}
           keyExtractor={item => item.titleString}
         />
@@ -190,4 +214,4 @@ const mapStateToProps = (state: RootState) => ({
   manga: state.manga
 })
 
-export default connect(mapStateToProps, { searchManga })(SearchScreen);
+export default connect(mapStateToProps, { searchManga, selectFromSearch })(SearchScreen);

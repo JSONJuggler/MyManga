@@ -4,11 +4,10 @@ import { StatusBar } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { TabParamList } from "./app";
-import globalStyles, { COLORS } from "./styles/styles";
-import SearchScreen from "./screens/SearchScreen";
-import LibraryScreen from "./screens/LibraryScreen";
-import SettingsScreen from "./screens/SettingsScreen";
+import globalStyles, { COLORS } from "../styles/styles";
+import LibraryScreen from "../screens/LibraryScreen";
+import SettingsScreen from "../screens/SettingsScreen";
+import SearchStackScreen from "./SearchStackScreen";
 
 const Tab = createMaterialBottomTabNavigator<TabParamList>();
 
@@ -29,7 +28,7 @@ const Main = () => {
 
           <Tab.Screen
             name="Search"
-            component={SearchScreen}
+            component={SearchStackScreen}
             options={{
               tabBarLabel: "Search",
               tabBarColor: COLORS.searchBar,

@@ -9,10 +9,22 @@ type ItemProps = {
   chapterCount: string
   mangaType: string
   mangaGenre: string
+  handleSelect: (title: string, link: string) => void
 }
-const SearchListItem = ({ img, title, link, chapterCount, mangaType, mangaGenre }: ItemProps) => {
+const SearchListItem = ({
+  img,
+  title,
+  link,
+  chapterCount,
+  mangaType,
+  mangaGenre,
+  handleSelect
+}: ItemProps) => {
   return <>
-    <View style={styles.item}>
+    <TouchableOpacity
+      style={styles.item}
+      onPress={() => handleSelect(title, link)}
+    >
       <View style={styles.content}>
         <Image style={styles.image} source={{ uri: img }} />
         <View style={styles.textContent}>
@@ -30,7 +42,7 @@ const SearchListItem = ({ img, title, link, chapterCount, mangaType, mangaGenre 
           </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   </>
 };
 
