@@ -2,15 +2,17 @@ import { Dispatch } from "redux";
 import { ApiResponse, create } from "apisauce";
 import {
   SearchResult,
-  Manga,
   SEARCH_MANGA_START,
   SEARCH_MANGA_FINISHED,
   SEARCH_RESULT_EMPTY,
   SELECT_FROM_SEARCH,
   GET_MANGA_DETAILS,
+  SELECT_CHAPTER,
+  GET_CHAPTER_PAGES,
   SAVE_MANGA,
   MangaActionTypes,
-  MangaDetails
+  MangaDetails,
+  ChapterPages
 } from "./types";
 import { MangaGenreState } from "../../app"
 import { MangaGenre } from "../../enums/mangaGenre";
@@ -108,6 +110,47 @@ export const getMangaDetails = (
       type: GET_MANGA_DETAILS,
       payload: data
     });
+
+  } catch (err) {
+    // dispatch({
+    //   type: SEARCH_FAIL
+    //   payload: res.data
+    // });
+  }
+};
+
+export const selectChapter = (
+  chapterLandingUrl: string,
+) => async (dispatch: Dispatch<any>) => {
+  try {
+
+    dispatch({
+      type: SELECT_CHAPTER,
+      payload: chapterLandingUrl
+    })
+
+    dispatch(getMangaChapterPages(chapterLandingUrl))
+
+  } catch (err) {
+    // dispatch({
+    //   type: SEARCH_FAIL
+    //   payload: res.data
+    // });
+  }
+};
+
+export const getMangaChapterPages = (
+  chapterLandingUrl: string,
+) => async (dispatch: Dispatch) => {
+  try {
+
+    const { data }: ApiResponse<ChapterPages> = await api.get(
+      "/api/manga/pages?chapterLandingUrl=" + chapterLandingUrl)
+
+    dispatch({
+      type: GET_CHAPTER_PAGES,
+      payload: data
+    })
 
   } catch (err) {
     // dispatch({

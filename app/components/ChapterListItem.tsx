@@ -1,19 +1,19 @@
 import React from "react";
-import { Image, View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { MangaChapter } from "../src/actions/types";
-import { COLORS } from "../styles/styles"
 
-type ItemProps = MangaChapter
+type ItemProps = MangaChapter & { handleChapterSelect: (chapterLandingUrl: string) => void }
 
 const ChapterListItem = ({
   titleString,
   linkString,
-  dateString
+  dateString,
+  handleChapterSelect
 }: ItemProps) => {
   return <>
     <TouchableOpacity
       style={styles.item}
-      onPress={() => console.log(linkString)}
+      onPress={() => handleChapterSelect(linkString)}
     >
       <View style={styles.content}>
         <View style={styles.textContent}>

@@ -3,6 +3,8 @@ export const SEARCH_MANGA_FINISHED = "SEARCH_MANGA_FINISHED";
 export const SEARCH_RESULT_EMPTY = "SEARCH_RESULT_EMPTY";
 export const SELECT_FROM_SEARCH = "SELECT_FROM_SEARCH";
 export const GET_MANGA_DETAILS = "GET_MANGA_DETAILS";
+export const SELECT_CHAPTER = "SELECT_CHAPTER";
+export const GET_CHAPTER_PAGES = "GET_CHAPTER_PAGES";
 export const SAVE_MANGA = "SAVE_MANGA";
 
 export type SearchResult = {
@@ -12,11 +14,6 @@ export type SearchResult = {
   chapterCountString: string;
   mangaTypeString: string;
   mangaGenreString: string;
-}
-
-export type Manga = {
-  pages: Array<string>
-  data: SearchResult
 }
 
 export type SelectedFromSearch = {
@@ -38,6 +35,12 @@ export type MangaDetails = {
   artistString: string
   summaryString: string
   chapters: Array<MangaChapter>
+}
+
+export type ChapterPages = {
+  imageMaxWidth: number | string
+  imageMaxHeight: number | string
+  chapterImageUrls: Array<string>
 }
 
 interface SelectFromSearchAction {
@@ -63,24 +66,39 @@ interface SearchResultEmptyAction {
   type: typeof SEARCH_RESULT_EMPTY
 }
 
+interface SelectChapterAction {
+  type: typeof SELECT_CHAPTER
+  payload: string
+}
+
+interface GetChapterPagesAction {
+  type: typeof GET_CHAPTER_PAGES
+  payload: ChapterPages
+}
+
 interface SaveMangaAction {
   type: typeof SAVE_MANGA
-  payload: Manga
+  payload: any
 }
 
 export type MangaState = {
   searchResults: Array<SearchResult>
   selectedFromSearch: SelectedFromSearch
   mangaDetails: MangaDetails
-  savedManga: Array<Manga>
+  selectedChapterLandingUrl: string
+  chapterPages: ChapterPages
+  savedManga: any
   searchEmpty: boolean
   loadingDetails: boolean
   loadingSearch: boolean
+  loadingMangaPages: boolean
 }
 
 export type MangaActionTypes = SearchMangaStartAction
   | SearchMangaFinishedAction
   | SearchResultEmptyAction
   | SelectFromSearchAction
+  | SelectChapterAction
+  | GetChapterPagesAction
   | GetMangaDetailsAction
   | SaveMangaAction

@@ -7,7 +7,6 @@ import {
   Image,
   View,
 } from "react-native";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Progress from "react-native-progress";
 import ChapterListItem from "../components/ChapterListItem";
 import { connect } from "react-redux";
@@ -15,23 +14,36 @@ import { RootState } from "../src/reducers";
 import { SearchDetailsScreenNavigationProp } from "../app"
 import globalStyles, { COLORS } from "../styles/styles"
 
-import { MangaState } from "../src/actions/types";
+import { ChapterPages, MangaState } from "../src/actions/types";
+import { selectChapter } from "../src/actions/manga"
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import Config from "react-native-config"
+import { ApiResponse, create } from "apisauce";
+import MangaViewModal from "../modals/MangaViewModal";
 
 type SearchScreenProps = {
   manga: MangaState
   navigation: SearchDetailsScreenNavigationProp
+  selectedChapterLandingUrl: string
+  chapterPages: ChapterPages
+  loadingMangaPages: boolean
+  selectChapter: (chapterLandingUrl: string) => void
 }
 
 const SearchDetailsScreen = ({
   manga: {
     mangaDetails,
-    loadingDetails
+    selectedChapterLandingUrl,
+    chapterPages,
+    loadingDetails,
+    loadingMangaPages
   },
-  navigation
+  navigation,
+  selectChapter
 }: SearchScreenProps) => {
 
   const [showDetails, setShowDetails] = React.useState(true)
+  const [mangaViewOpen, setMangaViewOpen] = React.useState(false)
 
   React.useEffect(() => {
     navigation.addListener("beforeRemove", (e) => {
@@ -53,6 +65,15 @@ const SearchDetailsScreen = ({
 
   const toggleDetails = () => {
     setShowDetails(() => !showDetails)
+  }
+
+  const handleChapterSelect = (chapterLandingUrl: string) => {
+    setMangaViewOpen(() => true)
+    selectChapter(chapterLandingUrl)
+  }
+
+  const handleCloseMangaViewModal = () => {
+    setMangaViewOpen(() => false)
   }
 
   return (
@@ -83,6 +104,7 @@ const SearchDetailsScreen = ({
                 <Text style={styles.text}> {artistString}</Text>
               </View>
             </View>
+
             <TouchableOpacity
               onPress={toggleDetails}
               style={[globalStyles.button, styles.button]}
@@ -92,6 +114,7 @@ const SearchDetailsScreen = ({
               </Text>
             </TouchableOpacity>
           </View>
+
           {showDetails &&
             <View style={styles.content}>
               <Image style={styles.image} source={{ uri: coverUrl }} />
@@ -102,7 +125,9 @@ const SearchDetailsScreen = ({
               </View>
             </View>
           }
+
           <View style={styles.separator} />
+
           <FlatList
             style={{ flexGrow: 1 }}
             data={chapters}
@@ -114,8 +139,17 @@ const SearchDetailsScreen = ({
                 linkString={item.linkString}
                 chapterNumberString={item.chapterNumberString}
                 dateString={item.dateString}
+                handleChapterSelect={handleChapterSelect}
               />)}
             keyExtractor={item => item.titleString}
+          />
+
+          <MangaViewModal
+            mangaViewOpen={mangaViewOpen}
+            handleCloseMangaViewModal={handleCloseMangaViewModal}
+            chapterPages={chapterPages}
+            loadingMangaPages={loadingMangaPages}
+            selectedChapterLandingUrl={selectedChapterLandingUrl}
           />
           <View style={styles.separator} />
         </>
@@ -184,4 +218,4 @@ const mapStateToProps = (state: RootState) => ({
   manga: state.manga
 })
 
-export default connect(mapStateToProps)(SearchDetailsScreen);
+export default connect(mapStateToProps, { selectChapter })(SearchDetailsScreen);

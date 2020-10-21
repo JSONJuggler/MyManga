@@ -1,11 +1,13 @@
+import { selectChapter } from "../actions/manga";
 import {
   MangaState,
   SearchResult,
-  Manga,
   SEARCH_MANGA_START,
   SEARCH_MANGA_FINISHED,
   SEARCH_RESULT_EMPTY,
   SELECT_FROM_SEARCH,
+  SELECT_CHAPTER,
+  GET_CHAPTER_PAGES,
   GET_MANGA_DETAILS,
   SAVE_MANGA,
   MangaActionTypes
@@ -22,10 +24,17 @@ const initialState: MangaState = {
     summaryString: "",
     chapters: []
   },
+  selectedChapterLandingUrl: "",
+  chapterPages: {
+    imageMaxWidth: "",
+    imageMaxHeight: "",
+    chapterImageUrls: []
+  },
   savedManga: [],
   searchEmpty: false,
   loadingDetails: false,
-  loadingSearch: false
+  loadingSearch: false,
+  loadingMangaPages: false
 };
 
 export default function (state = initialState, action: MangaActionTypes): MangaState {
@@ -68,6 +77,23 @@ export default function (state = initialState, action: MangaActionTypes): MangaS
         ...state,
         mangaDetails: action.payload,
         loadingDetails: false
+      };
+    case SELECT_CHAPTER:
+      return {
+        ...state,
+        selectedChapterLandingUrl: action.payload,
+        chapterPages: {
+          imageMaxWidth: "",
+          imageMaxHeight: "",
+          chapterImageUrls: []
+        },
+        loadingMangaPages: true
+      };
+    case GET_CHAPTER_PAGES:
+      return {
+        ...state,
+        chapterPages: action.payload,
+        loadingMangaPages: false
       };
     case SAVE_MANGA:
       return {
