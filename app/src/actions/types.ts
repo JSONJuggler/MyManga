@@ -37,10 +37,14 @@ export type MangaDetails = {
   chapters: Array<MangaChapter>
 }
 
+export type ChapterPage = {
+  chapterImageUrl: string
+  imageWidth: string
+  imageHeight: string
+}
+
 export type ChapterPages = {
-  imageMaxWidth: number | string
-  imageMaxHeight: number | string
-  chapterImageUrls: Array<string>
+  chapterImageUrls: Array<ChapterPage>
 }
 
 interface SelectFromSearchAction {

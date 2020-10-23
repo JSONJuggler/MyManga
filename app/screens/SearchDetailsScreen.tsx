@@ -69,7 +69,9 @@ const SearchDetailsScreen = ({
 
   const handleChapterSelect = (chapterLandingUrl: string) => {
     setMangaViewOpen(() => true)
-    selectChapter(chapterLandingUrl)
+    if (selectedChapterLandingUrl !== chapterLandingUrl) {
+      selectChapter(chapterLandingUrl)
+    }
   }
 
   const handleCloseMangaViewModal = () => {

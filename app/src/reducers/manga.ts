@@ -26,8 +26,6 @@ const initialState: MangaState = {
   },
   selectedChapterLandingUrl: "",
   chapterPages: {
-    imageMaxWidth: "",
-    imageMaxHeight: "",
     chapterImageUrls: []
   },
   savedManga: [],
@@ -83,8 +81,6 @@ export default function (state = initialState, action: MangaActionTypes): MangaS
         ...state,
         selectedChapterLandingUrl: action.payload,
         chapterPages: {
-          imageMaxWidth: "",
-          imageMaxHeight: "",
           chapterImageUrls: []
         },
         loadingMangaPages: true

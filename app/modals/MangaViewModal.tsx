@@ -82,7 +82,10 @@ const MangaViewModal = ({
               <Text style={styles.titleText}>
                 {titleString[1]}
               </Text>
-              <TouchableOpacity style={styles.icon}>
+              <TouchableOpacity
+                style={styles.icon}
+                onPress={handleCloseMangaViewModal}
+              >
                 <MaterialCommunityIcons
                   name="alpha-x-circle-outline"
                   color={COLORS.white} size={26}
@@ -96,13 +99,18 @@ const MangaViewModal = ({
                 <View style={styles.separator} />)}
               extraData={mangaViewOpen}
               renderItem={({ item, index }) => (
-                <View >
+                <View>
                   <Image
                     style={styles.image}
-                    source={{ uri: item }} />
+                    source={{
+                      uri: item.chapterImageUrl,
+                      height: parseInt(item.imageHeight) > 1200 ? parseInt(item.imageHeight) / 1.95 : windowHeight / 1.5
+                    }}
+                    resizeMode="contain"
+                  />
                 </View>
               )}
-              keyExtractor={item => item}
+              keyExtractor={item => item.chapterImageUrl}
             />
           </>
         }
@@ -121,9 +129,6 @@ const styles = StyleSheet.create({
     alignItems: "flex-end"
   },
   image: {
-    width: "100%",
-    height: windowHeight / 1.5,
-    resizeMode: "contain",
   },
   loadingText: {
     color: COLORS.white

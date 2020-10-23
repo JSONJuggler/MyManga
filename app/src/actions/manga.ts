@@ -21,8 +21,10 @@ import { MangaStatus } from "../../enums/mangaStatus";
 import { MangaOrder } from "../../enums/mangaOrder";
 import Config from "react-native-config"
 
+const baseUrl = __DEV__ ? Config.DEV_BASE_URL : Config.PROD_BASE_URL
+
 const api = create({
-  baseURL: Config.BASE_URL,
+  baseURL: baseUrl,
 })
 
 export const searchManga = (
