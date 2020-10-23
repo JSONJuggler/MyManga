@@ -9,6 +9,7 @@ import {
   SELECT_CHAPTER,
   GET_CHAPTER_PAGES,
   GET_MANGA_DETAILS,
+  ADD_PAGE_TO_FETCHED_PAGES,
   SAVE_MANGA,
   MangaActionTypes
 } from "../actions/types";
@@ -26,6 +27,7 @@ const initialState: MangaState = {
   },
   selectedChapterLandingUrl: "",
   chapterPages: {
+    chapterPageUrls: [],
     chapterImageUrls: []
   },
   savedManga: [],
@@ -81,6 +83,7 @@ export default function (state = initialState, action: MangaActionTypes): MangaS
         ...state,
         selectedChapterLandingUrl: action.payload,
         chapterPages: {
+          chapterPageUrls: [],
           chapterImageUrls: []
         },
         loadingMangaPages: true
@@ -91,6 +94,11 @@ export default function (state = initialState, action: MangaActionTypes): MangaS
         chapterPages: action.payload,
         loadingMangaPages: false
       };
+    case ADD_PAGE_TO_FETCHED_PAGES:
+      return {
+        ...state,
+        chapterPages: action.payload
+      }
     case SAVE_MANGA:
       return {
         ...state,

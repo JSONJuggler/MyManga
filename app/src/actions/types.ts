@@ -5,6 +5,7 @@ export const SELECT_FROM_SEARCH = "SELECT_FROM_SEARCH";
 export const GET_MANGA_DETAILS = "GET_MANGA_DETAILS";
 export const SELECT_CHAPTER = "SELECT_CHAPTER";
 export const GET_CHAPTER_PAGES = "GET_CHAPTER_PAGES";
+export const ADD_PAGE_TO_FETCHED_PAGES = "ADD_PAGE_TO_FETCHED_PAGES";
 export const SAVE_MANGA = "SAVE_MANGA";
 
 export type SearchResult = {
@@ -44,7 +45,8 @@ export type ChapterPage = {
 }
 
 export type ChapterPages = {
-  chapterImageUrls: Array<ChapterPage>
+  chapterPageUrls: Array<string>
+  chapterImageUrls: Array<ChapterPage | undefined>
 }
 
 interface SelectFromSearchAction {
@@ -80,6 +82,11 @@ interface GetChapterPagesAction {
   payload: ChapterPages
 }
 
+interface AddPageToFetchedPages {
+  type: typeof ADD_PAGE_TO_FETCHED_PAGES
+  payload: ChapterPages
+}
+
 interface SaveMangaAction {
   type: typeof SAVE_MANGA
   payload: any
@@ -105,4 +112,5 @@ export type MangaActionTypes = SearchMangaStartAction
   | SelectChapterAction
   | GetChapterPagesAction
   | GetMangaDetailsAction
+  | AddPageToFetchedPages
   | SaveMangaAction

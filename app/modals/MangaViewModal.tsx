@@ -103,14 +103,14 @@ const MangaViewModal = ({
                   <Image
                     style={styles.image}
                     source={{
-                      uri: item.chapterImageUrl,
-                      height: parseInt(item.imageHeight) > 1200 ? parseInt(item.imageHeight) / 1.95 : windowHeight / 1.5
+                      uri: item?.chapterImageUrl,
+                      height: parseInt(item!.imageHeight) > 1200 ? parseInt(item!.imageHeight) / 1.95 : windowHeight / 1.5
                     }}
                     resizeMode="contain"
                   />
                 </View>
               )}
-              keyExtractor={item => item.chapterImageUrl}
+              keyExtractor={item => item!.chapterImageUrl}
             />
           </>
         }

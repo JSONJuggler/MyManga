@@ -9,10 +9,12 @@ import {
   GET_MANGA_DETAILS,
   SELECT_CHAPTER,
   GET_CHAPTER_PAGES,
+  ADD_PAGE_TO_FETCHED_PAGES,
   SAVE_MANGA,
   MangaActionTypes,
   MangaDetails,
-  ChapterPages
+  ChapterPages,
+  ChapterPage
 } from "./types";
 import { MangaGenreState } from "../../app"
 import { MangaGenre } from "../../enums/mangaGenre";
@@ -153,6 +155,34 @@ export const getMangaChapterPages = (
       type: GET_CHAPTER_PAGES,
       payload: data
     })
+
+    const remainingChapters = data?.chapterPageUrls.slice(4, data.chapterPageUrls.length)
+
+    while (remainingChapters?.length) {
+      let nextChapter = remainingChapters.shift()
+
+      let res: ApiResponse<ChapterPage> = await api.get(
+        "/api/manga/page?chapter=" + nextChapter)
+
+      if (!res.data) {
+        let res: ApiResponse<ChapterPage> = await api.get(
+          "/api/manga/page?chapter=" + nextChapter)
+
+        data?.chapterImageUrls.push(res.data)
+
+        dispatch({
+          type: ADD_PAGE_TO_FETCHED_PAGES,
+          payload: data
+        })
+      }
+
+      data?.chapterImageUrls?.push(res.data)
+
+      dispatch({
+        type: ADD_PAGE_TO_FETCHED_PAGES,
+        payload: data
+      })
+    }
 
   } catch (err) {
     // dispatch({
