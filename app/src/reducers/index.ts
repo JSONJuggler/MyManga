@@ -1,10 +1,10 @@
-import { combineReducers } from "redux";
-import manga from "./manga";
+import {combineReducers} from 'redux';
+import manga from './manga';
 
 const rootReducer = combineReducers({
-  manga
-})
+  manga,
+});
 
-export type RootState = ReturnType<typeof rootReducer>
+export type RootState = ReturnType<typeof rootReducer>;
 
-export default rootReducer
+export default rootReducer;

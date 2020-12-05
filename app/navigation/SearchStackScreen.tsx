@@ -1,10 +1,10 @@
-import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
-import { COLORS } from "../styles/styles"
+import React from 'react';
+import {createStackNavigator} from '@react-navigation/stack';
+import {COLORS} from '../styles/styles';
 
-import { StackParamList } from "../app";
-import SearchScreen from "../screens/SearchScreen";
-import SearchDetailsScreen from "../screens/SearchDetailsScreen";
+import {StackParamList} from '../app';
+import SearchScreen from '../screens/SearchScreen';
+import SearchDetailsScreen from '../screens/SearchDetailsScreen';
 
 const Stack = createStackNavigator<StackParamList>();
 
@@ -13,21 +13,21 @@ const SearchStackScreen = () => {
     <Stack.Navigator
       screenOptions={{
         headerStyle: {
-          backgroundColor: COLORS.searchBackground
-        }
+          backgroundColor: COLORS.searchBackground,
+        },
       }}>
       <Stack.Screen
         name="Search"
         component={SearchScreen}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="SearchDetails"
         component={SearchDetailsScreen}
-        options={({ route }) => ({ title: route?.params?.title })}
+        options={({route}) => ({title: route?.params?.title})}
       />
     </Stack.Navigator>
   );
 };
 
-export default SearchStackScreen
+export default SearchStackScreen;

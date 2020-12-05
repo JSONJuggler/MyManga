@@ -1,15 +1,13 @@
-import React from "react";
-import { SafeAreaView, StyleSheet, Text, ScrollView } from "react-native";
-import globalStyles, { COLORS } from "../styles/styles"
-import { LibraryScreenProps } from "../app";
+import React from 'react';
+import {SafeAreaView, StyleSheet, Text, ScrollView} from 'react-native';
+import globalStyles, {COLORS} from '../styles/styles';
+import {LibraryScreenProps} from '../app';
 
-const LibraryScreen = ({ navigation }: LibraryScreenProps) => {
+const LibraryScreen = ({navigation}: LibraryScreenProps) => {
   return (
     <SafeAreaView style={[globalStyles.safeArea, styles.safeArea]}>
       <ScrollView style={styles.container}>
-        <Text style={styles.text}>
-          This is the Profile Screen
-        </Text>
+        <Text style={styles.text}>This is the Profile Screen</Text>
       </ScrollView>
     </SafeAreaView>
   );
@@ -17,14 +15,14 @@ const LibraryScreen = ({ navigation }: LibraryScreenProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    alignSelf: "center"
+    alignSelf: 'center',
   },
   text: {
-    color: COLORS.black
+    color: COLORS.black,
   },
   safeArea: {
-    backgroundColor: COLORS.libraryBackground
-  }
-})
+    backgroundColor: COLORS.libraryBackground,
+  },
+});
 
-export default LibraryScreen
+export default LibraryScreen;

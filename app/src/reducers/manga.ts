@@ -1,4 +1,4 @@
-import { selectChapter } from "../actions/manga";
+import {selectChapter} from '../actions/manga';
 import {
   MangaState,
   SearchResult,
@@ -11,72 +11,75 @@ import {
   GET_MANGA_DETAILS,
   ADD_PAGE_TO_FETCHED_PAGES,
   SAVE_MANGA,
-  MangaActionTypes
-} from "../actions/types";
+  MangaActionTypes,
+} from '../actions/types';
 
 const initialState: MangaState = {
   searchResults: [],
-  selectedFromSearch: { title: "", link: "" },
+  selectedFromSearch: {title: '', link: ''},
   mangaDetails: {
-    coverUrl: "",
-    requestUrl: "",
-    authorString: "",
-    artistString: "",
-    summaryString: "",
-    chapters: []
+    coverUrl: '',
+    requestUrl: '',
+    authorString: '',
+    artistString: '',
+    summaryString: '',
+    chapters: [],
   },
-  selectedChapterLandingUrl: "",
+  selectedChapterLandingUrl: '',
   chapterPages: {
     chapterPageUrls: [],
-    chapterImageUrls: []
+    chapterImageUrls: [],
   },
   savedManga: [],
   searchEmpty: false,
   loadingDetails: false,
   loadingSearch: false,
-  loadingMangaPages: false
+  loadingMangaPages: false,
 };
 
-export default function (state = initialState, action: MangaActionTypes): MangaState {
+export default function (
+  state = initialState,
+  action: MangaActionTypes,
+): MangaState {
   switch (action.type) {
     case SEARCH_MANGA_START:
       return {
         ...state,
         searchResults: [],
-        loadingSearch: true
-      }
+        loadingSearch: true,
+      };
     case SEARCH_MANGA_FINISHED:
       return {
         ...state,
         searchResults: action.payload,
         searchEmpty: false,
-        loadingSearch: false
+        loadingSearch: false,
       };
     case SEARCH_RESULT_EMPTY:
       return {
         ...state,
         searchEmpty: true,
-        loadingSearch: false
-      }
+        loadingSearch: false,
+      };
     case SELECT_FROM_SEARCH:
       return {
         ...state,
         selectedFromSearch: action.payload,
         mangaDetails: {
-          coverUrl: "",
-          requestUrl: "",
-          authorString: "",
-          artistString: "",
-          summaryString: "",
-          chapters: []
+          coverUrl: '',
+          requestUrl: '',
+          authorString: '',
+          artistString: '',
+          summaryString: '',
+          chapters: [],
         },
-        loadingDetails: true
+        loadingDetails: true,
       };
     case GET_MANGA_DETAILS:
       return {
         ...state,
         mangaDetails: action.payload,
-        loadingDetails: false
+        loadingDetails: false,
       };
     case SELECT_CHAPTER:
       return {
@@ -84,21 +87,21 @@ export default function (state = initialState, action: MangaActionTypes): MangaS
         selectedChapterLandingUrl: action.payload,
         chapterPages: {
           chapterPageUrls: [],
-          chapterImageUrls: []
+          chapterImageUrls: [],
         },
-        loadingMangaPages: true
+        loadingMangaPages: true,
       };
     case GET_CHAPTER_PAGES:
       return {
         ...state,
         chapterPages: action.payload,
-        loadingMangaPages: false
+        loadingMangaPages: false,
       };
     case ADD_PAGE_TO_FETCHED_PAGES:
       return {
         ...state,
-        chapterPages: action.payload
-      }
+        chapterPages: action.payload,
+      };
     case SAVE_MANGA:
       return {
         ...state,

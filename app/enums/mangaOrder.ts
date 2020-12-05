@@ -1,5 +1,5 @@
 export enum MangaOrder {
-  SIMILARITY = "Similarity",
-  ALPHABETICAL = "Alphabetical",
-  POPULARITY = "Popularity",
+  SIMILARITY = 'Similarity',
+  ALPHABETICAL = 'Alphabetical',
+  POPULARITY = 'Popularity',
 }

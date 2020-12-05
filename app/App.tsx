@@ -1,8 +1,8 @@
-import "react-native-gesture-handler";
-import React from "react";
-import { Provider } from "react-redux";
-import { StatusBar } from "react-native";
-import Main from "./navigation/Main";
+import 'react-native-gesture-handler';
+import React from 'react';
+import {Provider} from 'react-redux';
+import {StatusBar} from 'react-native';
+import Main from './navigation/Main';
 import configureStore from './src/configureStore';
 
 const store = configureStore({});

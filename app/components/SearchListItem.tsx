@@ -1,16 +1,16 @@
-import React from "react";
-import { Image, View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { COLORS } from "../styles/styles"
+import React from 'react';
+import {Image, View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {COLORS} from '../styles/styles';
 
 type ItemProps = {
-  img: string
-  title: string
-  link: string
-  chapterCount: string
-  mangaType: string
-  mangaGenre: string
-  handleSelect: (title: string, link: string) => void
-}
+  img: string;
+  title: string;
+  link: string;
+  chapterCount: string;
+  mangaType: string;
+  mangaGenre: string;
+  handleSelect: (title: string, link: string) => void;
+};
 const SearchListItem = ({
   img,
   title,
@@ -18,42 +18,53 @@ const SearchListItem = ({
   chapterCount,
   mangaType,
   mangaGenre,
-  handleSelect
+  handleSelect,
 }: ItemProps) => {
-  return <>
-    <TouchableOpacity
-      style={styles.item}
-      onPress={() => handleSelect(title, link)}
-    >
-      <View style={styles.content}>
-        <Image style={styles.image} source={{ uri: img }} />
-        <View style={styles.textContent}>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.title}>{title}</Text>
-          </View>
-          <View style={{ flexDirection: "row", marginTop: 8, marginBottom: "auto" }}>
-            <Text style={styles.chapterCount}>{chapterCount}</Text>
-          </View>
-          <View style={{ flexDirection: "row", marginTop: 8, marginBottom: "auto" }}>
-            <Text style={styles.mangaType}>{mangaType}</Text>
-          </View>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.mangaGenre}>{mangaGenre}</Text>
+  return (
+    <>
+      <TouchableOpacity
+        style={styles.item}
+        onPress={() => handleSelect(title, link)}>
+        <View style={styles.content}>
+          <Image style={styles.image} source={{uri: img}} />
+          <View style={styles.textContent}>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={styles.title}>{title}</Text>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                marginTop: 8,
+                marginBottom: 'auto',
+              }}>
+              <Text style={styles.chapterCount}>{chapterCount}</Text>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                marginTop: 8,
+                marginBottom: 'auto',
+              }}>
+              <Text style={styles.mangaType}>{mangaType}</Text>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={styles.mangaGenre}>{mangaGenre}</Text>
+            </View>
           </View>
         </View>
-      </View>
-    </TouchableOpacity>
-  </>
+      </TouchableOpacity>
+    </>
+  );
 };
 
 const styles = StyleSheet.create({
   chapterCount: {
     fontSize: 12,
     flex: 1,
-    flexWrap: "wrap"
+    flexWrap: 'wrap',
   },
   content: {
-    flexDirection: "row"
+    flexDirection: 'row',
   },
   item: {
     backgroundColor: COLORS.searchBar,
@@ -63,14 +74,14 @@ const styles = StyleSheet.create({
   },
   mangaGenre: {
     fontSize: 9,
-    fontStyle: "italic",
+    fontStyle: 'italic',
     flex: 1,
-    flexWrap: "wrap"
+    flexWrap: 'wrap',
   },
   mangaType: {
     fontSize: 12,
     flex: 1,
-    flexWrap: "wrap"
+    flexWrap: 'wrap',
   },
   image: {
     width: 140,
@@ -78,22 +89,22 @@ const styles = StyleSheet.create({
     resizeMode: 'stretch',
   },
   textContainer: {
-    flexDirection: "row",
+    flexDirection: 'row',
     margin: 5,
   },
   textContent: {
     paddingLeft: 10,
     paddingRight: 10,
-    flexDirection: "column",
+    flexDirection: 'column',
     flex: 1,
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
-    textDecorationLine: "underline",
+    fontWeight: 'bold',
+    textDecorationLine: 'underline',
     flex: 1,
-    flexWrap: "wrap"
+    flexWrap: 'wrap',
   },
-})
+});
 
-export default SearchListItem
+export default SearchListItem;

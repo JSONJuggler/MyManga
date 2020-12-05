@@ -1,33 +1,36 @@
-import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { MangaChapter } from "../src/actions/types";
+import React from 'react';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {MangaChapter} from '../src/actions/types';
 
-type ItemProps = MangaChapter & { handleChapterSelect: (chapterLandingUrl: string) => void }
+type ItemProps = MangaChapter & {
+  handleChapterSelect: (chapterLandingUrl: string) => void;
+};
 
 const ChapterListItem = ({
   titleString,
   linkString,
   dateString,
-  handleChapterSelect
+  handleChapterSelect,
 }: ItemProps) => {
-  return <>
-    <TouchableOpacity
-      style={styles.item}
-      onPress={() => handleChapterSelect(linkString)}
-    >
-      <View style={styles.content}>
-        <View style={styles.textContent}>
-          <Text style={styles.title}>{titleString}</Text>
-          <Text style={styles.date}>{dateString}</Text>
+  return (
+    <>
+      <TouchableOpacity
+        style={styles.item}
+        onPress={() => handleChapterSelect(linkString)}>
+        <View style={styles.content}>
+          <View style={styles.textContent}>
+            <Text style={styles.title}>{titleString}</Text>
+            <Text style={styles.date}>{dateString}</Text>
+          </View>
         </View>
-      </View>
-    </TouchableOpacity>
-  </>
+      </TouchableOpacity>
+    </>
+  );
 };
 
 const styles = StyleSheet.create({
   content: {
-    flexDirection: "row"
+    flexDirection: 'row',
   },
   item: {
     paddingTop: 10,
@@ -37,23 +40,23 @@ const styles = StyleSheet.create({
   date: {
     fontSize: 12,
     flex: 1,
-    flexWrap: "wrap",
-    textAlign: "right"
+    flexWrap: 'wrap',
+    textAlign: 'right',
   },
   textContent: {
     paddingLeft: 10,
     paddingRight: 10,
-    alignItems: "center",
-    flexDirection: "row",
+    alignItems: 'center',
+    flexDirection: 'row',
     flex: 1,
   },
   title: {
     fontSize: 12,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     flex: 1,
-    flexWrap: "wrap",
-    textAlign: "left"
+    flexWrap: 'wrap',
+    textAlign: 'left',
   },
-})
+});
 
-export default ChapterListItem
+export default ChapterListItem;

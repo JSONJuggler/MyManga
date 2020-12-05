@@ -1,28 +1,36 @@
-import React from 'react'
-import { Modal, SafeAreaView, View, Text, StyleSheet, FlatList, TouchableOpacity } from "react-native";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { CheckBox } from 'react-native-elements';
+import React from 'react';
+import {
+  Modal,
+  SafeAreaView,
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {CheckBox} from 'react-native-elements';
 import RNPickerSelect from 'react-native-picker-select';
-import { MangaGenreState } from "../app";
-import { MangaGenre } from "../enums/mangaGenre";
-import { MangaType } from "../enums/mangaType";
-import { MangaStatus } from "../enums/mangaStatus";
-import { MangaOrder } from "../enums/mangaOrder";
-import globalStyles, { COLORS } from "../styles/styles"
+import {MangaGenreState} from '../app';
+import {MangaGenre} from '../enums/mangaGenre';
+import {MangaType} from '../enums/mangaType';
+import {MangaStatus} from '../enums/mangaStatus';
+import {MangaOrder} from '../enums/mangaOrder';
+import globalStyles, {COLORS} from '../styles/styles';
 
 type FilterModalProps = {
-  filterOpen: boolean
-  genre: MangaGenreState
-  type: MangaType
-  status: MangaStatus
-  order: MangaOrder
-  setGenre: (prev: any) => void
-  setType: (prev: any) => void
-  setStatus: (prev: any) => void
-  setOrder: (prev: any) => void
-  toggleFilter: () => void
-  resetFilter: () => void
-}
+  filterOpen: boolean;
+  genre: MangaGenreState;
+  type: MangaType;
+  status: MangaStatus;
+  order: MangaOrder;
+  setGenre: (prev: any) => void;
+  setType: (prev: any) => void;
+  setStatus: (prev: any) => void;
+  setOrder: (prev: any) => void;
+  toggleFilter: () => void;
+  resetFilter: () => void;
+};
 
 const FilterModal = ({
   filterOpen,
@@ -35,28 +43,27 @@ const FilterModal = ({
   setStatus,
   setOrder,
   toggleFilter,
-  resetFilter
+  resetFilter,
 }: FilterModalProps) => {
-
-  const mangaGenreOptions = Object.values(MangaGenre).map(genre => ({
+  const mangaGenreOptions = Object.values(MangaGenre).map((genre) => ({
     label: genre,
-    value: genre
-  }))
+    value: genre,
+  }));
 
-  const mangaTypeOptions = Object.values(MangaType).map(type => ({
+  const mangaTypeOptions = Object.values(MangaType).map((type) => ({
     label: type,
-    value: type
-  }))
+    value: type,
+  }));
 
-  const mangaStatusOptions = Object.values(MangaStatus).map(type => ({
+  const mangaStatusOptions = Object.values(MangaStatus).map((type) => ({
     label: type,
-    value: type
-  }))
+    value: type,
+  }));
 
-  const mangaOrderOptions = Object.values(MangaOrder).map(type => ({
+  const mangaOrderOptions = Object.values(MangaOrder).map((type) => ({
     label: type,
-    value: type
-  }))
+    value: type,
+  }));
 
   return (
     <Modal
@@ -65,66 +72,52 @@ const FilterModal = ({
       animationType="slide"
       onRequestClose={toggleFilter}>
       <SafeAreaView style={styles.safeArea}>
-        <View style={{ flexDirection: "row", alignSelf: "center" }}>
-
+        <View style={{flexDirection: 'row', alignSelf: 'center'}}>
           <View style={styles.pickerContainer}>
-            <Text style={styles.text}>
-              Type
-            </Text>
+            <Text style={styles.text}>Type</Text>
             <RNPickerSelect
               placeholder={{}}
               style={pickerStyle}
               key={type}
               onValueChange={(value) => setType((prev: any) => value)}
               value={type}
-              items={mangaTypeOptions}>
-            </RNPickerSelect>
+              items={mangaTypeOptions}></RNPickerSelect>
           </View>
 
           <View style={styles.pickerContainer}>
-            <Text style={styles.text}>
-              Status
-            </Text>
+            <Text style={styles.text}>Status</Text>
             <RNPickerSelect
               placeholder={{}}
               style={pickerStyle}
               key={status}
               onValueChange={(value) => setStatus((prev: any) => value)}
               value={status}
-              items={mangaStatusOptions}>
-            </RNPickerSelect>
+              items={mangaStatusOptions}></RNPickerSelect>
           </View>
 
           <View style={styles.pickerContainer}>
-            <Text style={styles.text}>
-              Order
-            </Text>
+            <Text style={styles.text}>Order</Text>
             <RNPickerSelect
               placeholder={{}}
               style={pickerStyle}
               key={order}
               onValueChange={(value) => setOrder((prev: any) => value)}
               value={order}
-              items={mangaOrderOptions}>
-            </RNPickerSelect>
+              items={mangaOrderOptions}></RNPickerSelect>
           </View>
         </View>
 
-        <View style={[styles.pickerContainer, { width: "100%" }]}>
-          <Text style={styles.text}>
-            Genre
-          </Text>
+        <View style={[styles.pickerContainer, {width: '100%'}]}>
+          <Text style={styles.text}>Genre</Text>
         </View>
 
         <FlatList
           style={styles.flatList}
           data={mangaGenreOptions}
           extraData={filterOpen}
-          renderItem={({ item, index }) => (
-            <View style={{ flexDirection: "row" }}>
-              <Text style={styles.text}>
-                {item.label}
-              </Text>
+          renderItem={({item, index}) => (
+            <View style={{flexDirection: 'row'}}>
+              <Text style={styles.text}>{item.label}</Text>
               <View style={styles.checkBoxContainer}>
                 <CheckBox
                   iconType="material"
@@ -132,82 +125,100 @@ const FilterModal = ({
                   uncheckedIcon="radio-button-unchecked"
                   checkedColor={COLORS.black}
                   checked={genre[item.value]?.added}
-                  onPress={() => genre[item.value]?.added ?
-                    setGenre({ ...genre, [item.value]: { added: false, removed: false } }) :
-                    setGenre({ ...genre, [item.value]: { added: true, removed: false } })}
+                  onPress={() =>
+                    genre[item.value]?.added
+                      ? setGenre({
+                          ...genre,
+                          [item.value]: {added: false, removed: false},
+                        })
+                      : setGenre({
+                          ...genre,
+                          [item.value]: {added: true, removed: false},
+                        })
+                  }
                 />
-                <MaterialCommunityIcons name="check-circle-outline" color={COLORS.black} size={26} />
+                <MaterialCommunityIcons
+                  name="check-circle-outline"
+                  color={COLORS.black}
+                  size={26}
+                />
                 <CheckBox
                   iconType="material"
                   checkedIcon="radio-button-checked"
                   uncheckedIcon="radio-button-unchecked"
                   checkedColor={COLORS.black}
                   checked={genre[item.value]?.removed}
-                  onPress={() => genre[item.value]?.removed ?
-                    setGenre({ ...genre, [item.value]: { added: false, removed: false } }) :
-                    setGenre({ ...genre, [item.value]: { added: false, removed: true } })}
+                  onPress={() =>
+                    genre[item.value]?.removed
+                      ? setGenre({
+                          ...genre,
+                          [item.value]: {added: false, removed: false},
+                        })
+                      : setGenre({
+                          ...genre,
+                          [item.value]: {added: false, removed: true},
+                        })
+                  }
                 />
-                <MaterialCommunityIcons name="close-circle-outline" color={COLORS.black} size={26} />
+                <MaterialCommunityIcons
+                  name="close-circle-outline"
+                  color={COLORS.black}
+                  size={26}
+                />
               </View>
-            </View>)}
-          keyExtractor={item => item.label}
+            </View>
+          )}
+          keyExtractor={(item) => item.label}
         />
 
-        <View style={{ flexDirection: "row", justifyContent: "center" }}>
+        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
           <TouchableOpacity
             onPress={resetFilter}
-            style={[globalStyles.button, styles.button]}
-          >
-            <Text style={styles.text}>
-              Reset filters
-          </Text>
+            style={[globalStyles.button, styles.button]}>
+            <Text style={styles.text}>Reset filters</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             onPress={toggleFilter}
-            style={[globalStyles.button, styles.button]}
-          >
-            <Text style={styles.text}>
-              Done
-          </Text>
+            style={[globalStyles.button, styles.button]}>
+            <Text style={styles.text}>Done</Text>
           </TouchableOpacity>
         </View>
-
       </SafeAreaView>
     </Modal>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   button: {
     backgroundColor: COLORS.searchBar,
-    flexDirection: "row"
+    flexDirection: 'row',
   },
   checkBoxContainer: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    alignItems: "center"
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
   },
   flatList: {
     backgroundColor: COLORS.searchBackground,
-    padding: 20
+    padding: 20,
   },
   pickerContainer: {
-    width: "30%",
-    margin: 5
+    width: '30%',
+    margin: 5,
   },
   safeArea: {
     backgroundColor: COLORS.searchBackground,
-    flex: 1
+    flex: 1,
   },
   text: {
     color: COLORS.black,
     fontSize: 20,
-    textAlign: "center",
-    alignSelf: "center"
+    textAlign: 'center',
+    alignSelf: 'center',
   },
-})
+});
 
 const pickerStyle = {
   inputIOS: {
@@ -227,4 +238,4 @@ const pickerStyle = {
   },
 };
 
-export default FilterModal
+export default FilterModal;
