@@ -19,6 +19,7 @@ const initialState: MangaState = {
   searchResults: [],
   selectedFromSearch: {title: '', link: ''},
   mangaDetails: {
+    title: '',
     coverUrl: '',
     requestUrl: '',
     authorString: '',
@@ -67,6 +68,7 @@ export default function (
         ...state,
         selectedFromSearch: action.payload,
         mangaDetails: {
+          title: '',
           coverUrl: '',
           requestUrl: '',
           authorString: '',

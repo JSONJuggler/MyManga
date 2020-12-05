@@ -94,7 +94,7 @@ export const selectFromSearch = (title: string, link: string) => async (
       payload: {title, link},
     });
 
-    dispatch(getMangaDetails(link));
+    dispatch(getMangaDetails(title, link));
   } catch (err) {
     // dispatch({
     //   type: SEARCH_FAIL
@@ -103,7 +103,9 @@ export const selectFromSearch = (title: string, link: string) => async (
   }
 };
 
-export const getMangaDetails = (link: string) => async (dispatch: Dispatch) => {
+export const getMangaDetails = (title: string, link: string) => async (
+  dispatch: Dispatch,
+) => {
   try {
     const {data}: ApiResponse<MangaDetails> = await api.get(
       '/api/manga/details?requestUrl=' + link,
@@ -111,7 +113,7 @@ export const getMangaDetails = (link: string) => async (dispatch: Dispatch) => {
 
     dispatch({
       type: GET_MANGA_DETAILS,
-      payload: data,
+      payload: {title, ...data},
     });
   } catch (err) {
     // dispatch({
