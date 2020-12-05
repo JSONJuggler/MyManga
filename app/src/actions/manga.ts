@@ -103,6 +103,22 @@ export const selectFromSearch = (title: string, link: string) => async (
   }
 };
 
+export const selectFromFavorites = (favoritedManga: MangaDetails) => async (
+  dispatch: Dispatch,
+) => {
+  try {
+    dispatch({
+      type: GET_MANGA_DETAILS,
+      payload: favoritedManga,
+    });
+  } catch (err) {
+    // dispatch({
+    //   type: SEARCH_FAIL
+    //   payload: res.data
+    // });
+  }
+};
+
 export const getMangaDetails = (title: string, link: string) => async (
   dispatch: Dispatch,
 ) => {

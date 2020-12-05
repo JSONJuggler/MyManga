@@ -22,7 +22,11 @@ import {MangaOrder} from '../enums/mangaOrder';
 import {SearchScreenNavigationProp} from '../app';
 import globalStyles, {COLORS} from '../styles/styles';
 
-import {searchManga, selectFromSearch} from '../src/actions/manga';
+import {
+  searchManga,
+  selectFromSearch,
+  selectFromFavorites,
+} from '../src/actions/manga';
 import {MangaDetails, MangaState} from '../src/actions/types';
 
 type SearchScreenProps = {
@@ -34,6 +38,7 @@ type SearchScreenProps = {
     order: MangaOrder,
   ) => Promise<void>;
   selectFromSearch: (title: string, link: string) => void;
+  selectFromFavorites: (favoritedManga: MangaDetails) => void;
   manga: MangaState;
   navigation: SearchScreenNavigationProp;
   mangaDetails: MangaDetails;
@@ -48,7 +53,8 @@ Object.values(MangaGenre).map(
 const SearchScreen = ({
   searchManga,
   selectFromSearch,
-  manga: {searchResults, mangaDetails, searchEmpty, loadingSearch},
+  selectFromFavorites,
+  manga: {searchResults, mangaDetails, savedManga, searchEmpty, loadingSearch},
   navigation,
 }: SearchScreenProps) => {
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -78,10 +84,17 @@ const SearchScreen = ({
   };
 
   const handleSelect = (title: string, link: string) => {
-    if (mangaDetails.requestUrl !== link) {
+    let favoritedManga: MangaDetails | null = null;
+    savedManga.forEach((item) => {
+      if (item.title === title) {
+        favoritedManga = item;
+      }
+    });
+    if (favoritedManga) {
+      selectFromFavorites(favoritedManga);
+    } else if (mangaDetails.requestUrl !== link) {
       selectFromSearch(title, link);
     }
-
     handleNavigation(title);
   };
 
@@ -213,6 +226,8 @@ const mapStateToProps = (state: RootState) => ({
   manga: state.manga,
 });
 
-export default connect(mapStateToProps, {searchManga, selectFromSearch})(
-  SearchScreen,
-);
+export default connect(mapStateToProps, {
+  searchManga,
+  selectFromSearch,
+  selectFromFavorites,
+})(SearchScreen);

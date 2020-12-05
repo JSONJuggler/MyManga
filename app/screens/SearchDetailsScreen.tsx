@@ -47,6 +47,7 @@ const SearchDetailsScreen = ({
 }: SearchScreenProps) => {
   const [showDetails, setShowDetails] = React.useState(true);
   const [mangaViewOpen, setMangaViewOpen] = React.useState(false);
+  const [isFavorite, setIsFavorite] = React.useState(false);
 
   React.useEffect(() => {
     navigation.addListener('beforeRemove', (e) => {
@@ -73,6 +74,15 @@ const SearchDetailsScreen = ({
     })();
   }, []);
 
+  React.useEffect(() => {
+    savedManga.forEach((item) => {
+      if (item.title === mangaDetails.title) {
+        setIsFavorite(true);
+      }
+    });
+    return () => setIsFavorite(false);
+  }, [mangaDetails, savedManga]);
+
   const {
     coverUrl,
     authorString,
@@ -86,13 +96,26 @@ const SearchDetailsScreen = ({
   };
 
   const addToFavorites = () => {
-    let favorites: MangaDetails[] = [mangaDetails, ...savedManga];
-    AsyncStorage.setItem('favorites', JSON.stringify(favorites)).catch(
+    let newFavorites: MangaDetails[] = [mangaDetails, ...savedManga];
+    AsyncStorage.setItem('favorites', JSON.stringify(newFavorites)).catch(
       (err) => {
         console.log(err);
       },
     );
-    loadFavorites(favorites);
+    loadFavorites(newFavorites);
+  };
+
+  const removeFromFavorites = () => {
+    let newFavorites: MangaDetails[] = savedManga.filter(
+      (item) => item.title !== mangaDetails.title,
+    );
+    AsyncStorage.setItem('favorites', JSON.stringify(newFavorites)).catch(
+      (err) => {
+        console.log(err);
+      },
+    );
+    setIsFavorite(false);
+    loadFavorites(newFavorites);
   };
 
   const handleChapterSelect = (chapterLandingUrl: string) => {
@@ -138,11 +161,20 @@ const SearchDetailsScreen = ({
               style={[globalStyles.button, styles.button]}>
               <Text style={{color: COLORS.black}}>Toggle Details</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={addToFavorites}
-              style={[globalStyles.button, styles.button]}>
-              <Text style={{color: COLORS.black}}>Favorite</Text>
-            </TouchableOpacity>
+            {isFavorite && (
+              <TouchableOpacity
+                onPress={removeFromFavorites}
+                style={[globalStyles.button, styles.button]}>
+                <Text style={{color: COLORS.black}}>Unfavorite</Text>
+              </TouchableOpacity>
+            )}
+            {!isFavorite && (
+              <TouchableOpacity
+                onPress={addToFavorites}
+                style={[globalStyles.button, styles.button]}>
+                <Text style={{color: COLORS.black}}>Favorite</Text>
+              </TouchableOpacity>
+            )}
           </View>
 
           {showDetails && (
