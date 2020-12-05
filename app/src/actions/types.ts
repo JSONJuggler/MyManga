@@ -82,7 +82,7 @@ interface GetChapterPagesAction {
   payload: ChapterPages;
 }
 
-interface AddPageToFetchedPages {
+interface AddPageToFetchedPagesAction {
   type: typeof ADD_PAGE_TO_FETCHED_PAGES;
   payload: ChapterPages;
 }
@@ -113,5 +113,4 @@ export type MangaActionTypes =
   | SelectChapterAction
   | GetChapterPagesAction
   | GetMangaDetailsAction
-  | AddPageToFetchedPages
-  | SaveMangaAction;
+  | AddPageToFetchedPagesAction
