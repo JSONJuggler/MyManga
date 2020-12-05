@@ -31,7 +31,7 @@ export type LibraryScreenNavigationProp = MaterialBottomTabNavigationProp<
   'Library'
 >;
 
-export type LibraryScreenProps = {
+export type LibraryScreenBaseProps = {
   route: LibraryScreenRouteProp;
   navigation: LibraryScreenNavigationProp;
 };

@@ -1,4 +1,5 @@
 import React from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
 import {
   Text,
   SafeAreaView,
@@ -14,8 +15,8 @@ import {RootState} from '../src/reducers';
 import {SearchDetailsScreenNavigationProp} from '../app';
 import globalStyles, {COLORS} from '../styles/styles';
 
-import {ChapterPages, MangaState} from '../src/actions/types';
-import {selectChapter} from '../src/actions/manga';
+import {ChapterPages, MangaDetails, MangaState} from '../src/actions/types';
+import {selectChapter, loadFavorites} from '../src/actions/manga';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import Config from 'react-native-config';
 import {ApiResponse, create} from 'apisauce';
@@ -28,11 +29,13 @@ type SearchScreenProps = {
   chapterPages: ChapterPages;
   loadingMangaPages: boolean;
   selectChapter: (chapterLandingUrl: string) => void;
+  loadFavorites: (favorites: MangaDetails[]) => void;
 };
 
 const SearchDetailsScreen = ({
   manga: {
     mangaDetails,
+    savedManga,
     selectedChapterLandingUrl,
     chapterPages,
     loadingDetails,
@@ -40,6 +43,7 @@ const SearchDetailsScreen = ({
   },
   navigation,
   selectChapter,
+  loadFavorites,
 }: SearchScreenProps) => {
   const [showDetails, setShowDetails] = React.useState(true);
   const [mangaViewOpen, setMangaViewOpen] = React.useState(false);
@@ -54,6 +58,21 @@ const SearchDetailsScreen = ({
     });
   }, [navigation, loadingDetails]);
 
+  React.useEffect(() => {
+    (async () => {
+      try {
+        let favorites: MangaDetails[];
+        const json = await AsyncStorage.getItem('favorites');
+        if (json) {
+          favorites = JSON.parse(json);
+          loadFavorites(favorites);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, []);
+
   const {
     coverUrl,
     authorString,
@@ -64,6 +83,16 @@ const SearchDetailsScreen = ({
 
   const toggleDetails = () => {
     setShowDetails(() => !showDetails);
+  };
+
+  const addToFavorites = () => {
+    let favorites: MangaDetails[] = [mangaDetails, ...savedManga];
+    AsyncStorage.setItem('favorites', JSON.stringify(favorites)).catch(
+      (err) => {
+        console.log(err);
+      },
+    );
+    loadFavorites(favorites);
   };
 
   const handleChapterSelect = (chapterLandingUrl: string) => {
@@ -108,6 +137,11 @@ const SearchDetailsScreen = ({
               onPress={toggleDetails}
               style={[globalStyles.button, styles.button]}>
               <Text style={{color: COLORS.black}}>Toggle Details</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={addToFavorites}
+              style={[globalStyles.button, styles.button]}>
+              <Text style={{color: COLORS.black}}>Favorite</Text>
             </TouchableOpacity>
           </View>
 
@@ -214,4 +248,7 @@ const mapStateToProps = (state: RootState) => ({
   manga: state.manga,
 });
 
-export default connect(mapStateToProps, {selectChapter})(SearchDetailsScreen);
+export default connect(mapStateToProps, {
+  selectChapter,
+  loadFavorites,
+})(SearchDetailsScreen);

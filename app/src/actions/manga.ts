@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import {Dispatch} from 'redux';
 import {ApiResponse, create} from 'apisauce';
 import {
@@ -11,6 +12,7 @@ import {
   GET_CHAPTER_PAGES,
   ADD_PAGE_TO_FETCHED_PAGES,
   SAVE_MANGA,
+  LOAD_FAVORITES,
   MangaActionTypes,
   MangaDetails,
   ChapterPages,
@@ -182,6 +184,22 @@ export const getMangaChapterPages = (chapterLandingUrl: string) => async (
         payload: data,
       });
     }
+  } catch (err) {
+    // dispatch({
+    //   type: SEARCH_FAIL
+    //   payload: res.data
+    // });
+  }
+};
+
+export const loadFavorites = (favorites: MangaDetails[]) => async (
+  dispatch: Dispatch,
+) => {
+  try {
+    dispatch({
+      type: LOAD_FAVORITES,
+      payload: favorites,
+    });
   } catch (err) {
     // dispatch({
     //   type: SEARCH_FAIL

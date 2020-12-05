@@ -7,6 +7,7 @@ export const SELECT_CHAPTER = 'SELECT_CHAPTER';
 export const GET_CHAPTER_PAGES = 'GET_CHAPTER_PAGES';
 export const ADD_PAGE_TO_FETCHED_PAGES = 'ADD_PAGE_TO_FETCHED_PAGES';
 export const SAVE_MANGA = 'SAVE_MANGA';
+export const LOAD_FAVORITES = 'LOAD_FAVORITES';
 
 export type SearchResult = {
   coverUrl: string;
@@ -92,13 +93,18 @@ interface SaveMangaAction {
   payload: any;
 }
 
+interface LoadFavoritesAction {
+  type: typeof LOAD_FAVORITES;
+  payload: MangaDetails[];
+}
+
 export type MangaState = {
   searchResults: Array<SearchResult>;
   selectedFromSearch: SelectedFromSearch;
   mangaDetails: MangaDetails;
   selectedChapterLandingUrl: string;
   chapterPages: ChapterPages;
-  savedManga: any;
+  savedManga: MangaDetails[];
   searchEmpty: boolean;
   loadingDetails: boolean;
   loadingSearch: boolean;
@@ -114,3 +120,5 @@ export type MangaActionTypes =
   | GetChapterPagesAction
   | GetMangaDetailsAction
   | AddPageToFetchedPagesAction
+  | SaveMangaAction
+  | LoadFavoritesAction;

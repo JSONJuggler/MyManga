@@ -12,6 +12,7 @@ import {
   ADD_PAGE_TO_FETCHED_PAGES,
   SAVE_MANGA,
   MangaActionTypes,
+  LOAD_FAVORITES,
 } from '../actions/types';
 
 const initialState: MangaState = {
@@ -105,6 +106,11 @@ export default function (
     case SAVE_MANGA:
       return {
         ...state,
+      };
+    case LOAD_FAVORITES:
+      return {
+        ...state,
+        savedManga: action.payload,
       };
     default:
       return state;
